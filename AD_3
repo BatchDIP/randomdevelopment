@@ -48,7 +48,8 @@
         android:hint="ReType Password"
         android:inputType="textPassword" app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/editTextText2" />
+        app:layout_constraintStart_toStartOf="parent" 
+        app:layout_constraintTop_toBottomOf="@+id/editTextText2" />
 
     <Button
         android:id="@+id/button"
@@ -70,27 +71,44 @@ MainActivity.java
 package com.example.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Bundle; import android.view.View; import android.widget.EditText; import android.widget.Button; import android.widget.Toast;
+import android.os.Bundle; 
+import android.view.View;
+import android.widget.EditText; 
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.myapplication.DBhelper;
 
-public class MainActivity extends AppCompatActivity { EditText user,pass,repass;
+public class MainActivity extends AppCompatActivity { 
+EditText user,pass,repass;
 Button btn;
 
-DBhelper db; @Override
-protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);
-btn = findViewById(R.id.button); db = new DBhelper(this);
-user = findViewById(R.id.editTextText); pass = findViewById(R.id.editTextText2); repass = findViewById(R.id.editTextText3);
+DBhelper db; 
+@Override
+protected void onCreate(Bundle savedInstanceState) 
+{ 
+super.onCreate(savedInstanceState); 
+setContentView(R.layout.activity_main);
+btn = findViewById(R.id.button); 
+db = new DBhelper(this);
+user = findViewById(R.id.editTextText);
+pass = findViewById(R.id.editTextText2); 
+repass = findViewById(R.id.editTextText3);
 
-btn.setOnClickListener(new View.OnClickListener() { @Override
+btn.setOnClickListener(new View.OnClickListener() {
+@Override
 public void onClick(View v) {
 
-String username = user.getText().toString(); String password = pass.getText().toString(); String repassword = repass.getText().toString();
+String username = user.getText().toString(); 
+String password = pass.getText().toString();
+String repassword = repass.getText().toString();
 if(password.equals(repassword))
 {
-Boolean checkuser = db.checkUserName(username); if(checkuser == false)
+Boolean checkuser = db.checkUserName(username); 
+if(checkuser == false)
 {
-Boolean insert = db.insertdata(username,password); if (insert == true)
+Boolean insert = db.insertdata(username,password);
+if (insert == true)
 {
 Toast.makeText(MainActivity.this,"Registration Successful",Toast.LENGTH_SHORT).show();
 }
@@ -115,13 +133,17 @@ Toast.makeText(MainActivity.this,"Password do not match",Toast.LENGTH_SHORT).sho
 
 DBHelper.java
 
-package com.example.myapplication; import android.content.ContentValues; import android.content.Context; 
+package com.example.myapplication; 
+import android.content.ContentValues;
+import android.content.Context; 
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase; import android.database.sqlite.SQLiteOpenHelper; 
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper; 
 import android.view.View;
 import androidx.annotation.Nullable;
 public class DBhelper extends SQLiteOpenHelper 
-{ public DBhelper(Context context) {
+{ 
+public DBhelper(Context context) {
 super(context, "Login.db", null, 1);
 }
 @Override
@@ -142,7 +164,9 @@ public Boolean insertdata(String user,String password)
 {
 SQLiteDatabase db = this.getWritableDatabase();
 
-ContentValues contentValues = new ContentValues(); contentValues.put("username",user); contentValues.put("password",password);
+ContentValues contentValues = new ContentValues(); 
+contentValues.put("username",user); 
+contentValues.put("password",password);
 
 long result = db.insert("users",null,contentValues); if(result==-1)
 {
